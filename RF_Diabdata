@@ -1,0 +1,73 @@
+import pandas as pd
+import numpy as np
+from sklearn import datasets,linear_model
+
+import seaborn as sns
+from matplotlib import pyplot as plt
+from sklearn.preprocessing import scale
+import sklearn.linear_model as sklm
+
+import statsmodels.formula.api as sm
+from statsmodels.graphics.mosaicplot import mosaic
+
+from sklearn.decomposition import PCA
+print("Packages LOADED!!!")
+
+import os
+
+os.chdir("C:\\Users\\rgoulika\\Downloads\\Datasets\\Datasets")
+print(os.getcwd())
+
+data=pd.read_csv("diabetes2.csv")
+
+data.info()
+from sklearn.cross_validation import train_test_split,cross_val_score
+from sklearn.externals.six import StringIO
+
+from sklearn.tree import DecisionTreeRegressor,DecisionTreeClassifier,export_graphviz
+from sklearn.ensemble import RandomForestRegressor,RandomForestClassifier,BaggingRegressor,GradientBoostingClassifier,GradientBoostingRegressor
+
+from sklearn.metrics import confusion_matrix,classification_report, mean_squared_error
+#import plotly.offline as py
+
+#py.init_notebook_mode(connected=True) 
+
+#import plotly.graph_objs as go
+#import plotly.tools as tls
+from sklearn import tree
+from sklearn.metrics import accuracy_score
+from sklearn.cross_validation import KFold
+from sklearn.cross_validation import cross_val_score
+
+array=data.values
+X=array[:,0:8] #Training Dataset
+y=array[:,8]
+
+test_size=0.33
+from sklearn.model_selection import train_test_split
+
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=test_size)
+print("Partitioning Done!")
+model=RandomForestRegressor(max_depth=5,n_estimators=500,oob_score=True)
+model.fit(X_train,y_train)
+model.score(X_test,y_test)
+pred=model.predict(X_test)
+#Anything above probability of 0.5 its 1(True) else 0(False)
+pred=(pred>0.5)
+#Creating a confusion Matrix
+cm_df=pd.DataFrame(confusion_matrix(y_test,pred).T)
+
+cm_df.index.name='Predicted'
+cm_df.columns.name='True'
+print(cm_df)
+
+print(classification_report(y_test,pred))
+
+#Validation methods roc_curve
+from sklearn.metrics import roc_curve
+fpr,tpr,_=roc_curve(y_test,pred)
+
+from sklearn.metrics import auc
+
+roc_auc=auc(fpr,tpr)
+print('Roc Auc: %0.2f'%roc_auc)
