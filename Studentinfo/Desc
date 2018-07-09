@@ -1,0 +1,22 @@
+This exercise is based on a subset of the data collected by the Open University as part of their learning analytics project (https://analyse.kmi.open.ac.uk/open_dataset). The data you need to work on is a file called studentInfo.csv (attached at the end of this section) and which contains the following fields:-
+
+code_module – an identification code for a module on which the student is registered.
+code_presentation - the identification code of the presentation during which the student is registered on the module.
+id_student – a unique identification number for the student.
+gender – the student’s gender.
+region – identifies the geographic region, where the student lived while taking the module-presentation.
+highest_education – highest student education level on entry to the module presentation.
+imd_band – specifies the Index of Multiple Depravation band of the place where the student lived during the module-presentation.
+age_band – band of the student’s age.
+num_of_prev_attempts – the number times the student has attempted this module.
+studied_credits – the total number of credits for the modules the student is currently studying.
+disability – indicates whether the student has declared a disability.
+final_result – student’s final result in the module-presentation.
+Your task is to analyse this file with the aim of trying to understand the factors that determine a student's final result. Note that you should work on just this one file and do not need to use any of the other datasets collected.
+Specifically you need to (allocated marks in brackets):
+
+Summarise and visualise the data. (20%)
+Prepare the dataset for analysis (data cleansing, choose appropriate features to model) etc.. (20%)
+Choose appropriate models for the problem and build, run and evaluate these. You should aim to explore 2 to 3 models, ranging from the basic to the more advanced. (40%)
+Present and interpret the results of your models and relate these to the given problem. (20%)
+The work needs to be presented as a 8-page (approximately) report in either PDF or Jupyter notebook format, and should include all the Python code used and developed.
