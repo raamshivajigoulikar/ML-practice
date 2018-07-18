@@ -1,3 +1,5 @@
+#http://pbpython.com/categorical-encoding.html
+#https://homes.cs.washington.edu/~pedrod/papers/cacm12.pdf
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
