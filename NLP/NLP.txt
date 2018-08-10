@@ -1,0 +1,12 @@
+#This for NLP Practice:
+Corpora
+Sentence TOkenize
+Word Tokenize
+StopWords
+Stemming
+
+import nltk
+from nltk.tokenizer import word_tokenize, sent_tokenize
+from nltk import StopWords
+
+stopw=set(StopWords("English"))
