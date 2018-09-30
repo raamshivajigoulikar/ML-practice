@@ -12,7 +12,8 @@ from sklearn.ensemble import RandomForestRegressor,RandomForestClassifier,Baggin
 from sklearn.metrics import confusion_matrix,classification_report, mean_squared_error
 import statsmodels.formula.api as sm
 from imblearn.over_sampling import SMOTE
-
+import warnings
+warnings.filterwarnings("ignore")
 
 plt.style.use('ggplot')
 
@@ -81,6 +82,20 @@ model.fit(X_train,y_train)
 model.score(X_test,y_test)
 pred=model.predict(X_test)
 
+#Determining Important Features from RF
+importances = model.feature_importances_
+names = emp_mod.columns
+importances, names = zip(*sorted(zip(importances, names)))
+
+# Plotting the importances
+plt.figure(figsize=(12,8))
+plt.barh(range(len(names)), importances, align = 'center')
+plt.yticks(range(len(names)), names)
+plt.xlabel('Importance of features')
+plt.ylabel('Features')
+plt.title('Importance of each feature using RandomForest using Unbalanced Dataset')
+plt.show()
+
 #Validation methods roc_curve for RandomForest
 fpr,tpr,_=roc_curve(y_test,pred)
 
@@ -106,38 +121,6 @@ plt.legend(loc="lower right")
 plt.show()
 
 #AUC of 79% with RandomForest
-
-
-#SVM 
-from sklearn import svm
-model_svm=svm.SVC(kernel='linear',probability=True)
-model_svm.fit(X_train,y_train)
-pred_svm=model_svm.predict(X_test)
-cm_df_svm=pd.DataFrame(confusion_matrix(y_test,pred_svm).T)
-cm_df_svm.index.name='Predicted'
-cm_df_svm.columns.name='True'
-print(cm_df_svm)
-print(classification_report(y_test,pred_svm))
-model_svm.score(X_test,y_test)
-fpr,tpr,__=roc_curve(y_test,pred_svm)
-
-#Calculate the AUC
-roc_auc=auc(fpr,tpr)
-print('ROC AUC:%0.2f'%roc_auc)
-
-
-#plot of a ROC Curve for a specific loss
-plt.figure()
-plt.plot(fpr,tpr,label='ROC Curve(area=%0.2f)'%roc_auc)
-
-plt.plot([0,1],[0,1],'k--')
-plt.xlim([0.0,1.0])
-plt.ylim([0.0,1.05])
-plt.xlabel('False Postive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('ROC Curve with SVM Un-Balanced Data')
-plt.legend(loc="lower right")
-plt.show()
 
 #Using GradientBoost for Classification for unbalanced Data
 model=GradientBoostingClassifier(n_estimators=500,learning_rate=0.5,max_depth=4)
@@ -217,6 +200,21 @@ model.fit(X_train,y_train)
 model.score(X_test,y_test)
 pred=model.predict(X_test)
 
+
+#Determining Important Features from RF
+importances = model.feature_importances_
+names = emp_mod.columns
+importances, names = zip(*sorted(zip(importances, names)))
+
+# Plotting the importances
+plt.figure(figsize=(12,8))
+plt.barh(range(len(names)), importances, align = 'center')
+plt.yticks(range(len(names)), names)
+plt.xlabel('Importance of features')
+plt.ylabel('Features')
+plt.title('Importance of each feature using RandomForest using Balanced Dataset')
+plt.show()
+
 #Validation methods roc_curve for RandomForest
 from sklearn.metrics import roc_curve
 fpr,tpr,_=roc_curve(y_test,pred)
@@ -242,46 +240,13 @@ plt.legend(loc="lower right")
 
 plt.show()
 
-#
-
-#SVM 
-from sklearn import svm
-model_svm=svm.SVC(kernel='linear',probability=True)
-model_svm.fit(X_train,y_train)
-pred_svm=model_svm.predict(X_test)
-cm_df_svm=pd.DataFrame(confusion_matrix(y_test,pred_svm).T)
-cm_df_svm.index.name='Predicted'
-cm_df_svm.columns.name='True'
-print(cm_df_svm)
-print(classification_report(y_test,pred_svm))
-model_svm.score(X_test,y_test)
-fpr,tpr,__=roc_curve(y_test,pred_svm)
-
-#Calculate the AUC
-roc_auc=auc(fpr,tpr)
-print('ROC AUC:%0.2f'%roc_auc)
-
-
-#plot of a ROC Curve for a specific loss
-plt.figure()
-plt.plot(fpr,tpr,label='ROC Curve(area=%0.2f)'%roc_auc)
-
-plt.plot([0,1],[0,1],'k--')
-plt.xlim([0.0,1.0])
-plt.ylim([0.0,1.05])
-plt.xlabel('False Postive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('ROC Curve with SVM Balanced Data')
-plt.legend(loc="lower right")
-plt.show()
-
 #Using GradientBoost for Classification
 model=GradientBoostingClassifier(n_estimators=500,learning_rate=0.5,max_depth=4)
 model.fit(X_train,y_train)
 model.score(X_test,y_test)
 pred=model.predict(X_test)
 
-#Validation methods roc_curve for RandomForest
+#Validation methods roc_curve for GradientBoost
 from sklearn.metrics import roc_curve
 fpr,tpr,_=roc_curve(y_test,pred)
 
